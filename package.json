@@ -1,0 +1,33 @@
+{
+  "name": "label-slow-prs",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Label recent PRs which have been open for more than 3 days",
+  "main": "lib/main.js",
+  "scripts": {
+    "build": "tsc",
+    "format": "prettier --write **/*.ts",
+    "format-check": "prettier --check **/*.ts",
+    "pack": "ncc build",
+    "all": "yarn run build && yarn run format && yarn run pack"
+  },
+  "author": "CoBloX Team",
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.2.0",
+    "@actions/github": "^2.0.1",
+    "moment": "^2.24.0",
+    "moment-business": "^3.0.1"
+  },
+  "devDependencies": {
+    "@types/moment-business": "^0.1.4",
+    "@types/node": "^12.7.12",
+    "@typescript-eslint/parser": "^2.8.0",
+    "@zeit/ncc": "^0.20.5",
+    "eslint": "^5.16.0",
+    "eslint-plugin-github": "^2.0.0",
+    "js-yaml": "^3.13.1",
+    "prettier": "^1.19.1",
+    "typescript": "^3.6.4"
+  }
+}

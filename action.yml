@@ -1,0 +1,9 @@
+name: 'Label slow PRs'
+description: 'Label recent PRs which have been open for more than 3 days'
+author: 'CoBloX Team'
+branding:
+  icon: git-pull-request
+  color: red
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
