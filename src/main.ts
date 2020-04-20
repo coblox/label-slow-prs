@@ -9,7 +9,9 @@ async function run(): Promise<void> {
     const client = new GitHub(token)
     const pulls = await client.pulls.list(context.repo)
 
-    const recentPulls = pulls.data.filter(pull => {
+    const nonDraftPulls = pulls.data.filter(pull => pull.draft === false)
+
+    const recentPulls = nonDraftPulls.filter(pull => {
       const now = moment()
       const createdAt = moment(pull.created_at)
       const twoWeeksAgo = now.subtract(2, 'weeks').startOf('day')
@@ -17,7 +19,7 @@ async function run(): Promise<void> {
       return createdAt.isAfter(twoWeeksAgo)
     })
 
-    const oldPulls = recentPulls.filter(pull => {
+    const slowPulls = recentPulls.filter(pull => {
       const createdAt = moment(pull.created_at)
       const closedAt = !!pull.closed_at ? moment(pull.closed_at) : moment()
       const weekdaysOpen = business.weekDays(createdAt, closedAt)
@@ -25,7 +27,7 @@ async function run(): Promise<void> {
       return weekdaysOpen >= 3
     })
 
-    for (const pull of oldPulls) {
+    for (const pull of slowPulls) {
       const issue_number = pull.number
       const owner = pull.head.user.login
       const repo = pull.head.repo.name
